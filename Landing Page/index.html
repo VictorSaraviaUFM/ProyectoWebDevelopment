@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FutStats | Analytics Deportivos Inteligentes</title>
+  
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- Iconos -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  
+  <!-- Fuentes -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+
+ <!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="#home">
+      <span class="logo-icon">⚽</span>
+      <strong>FutStats</strong>
+      <span class="beta-badge">BETA</span>
+    </a>
+    
+    <!-- Saludo  -->
+    <div class="navbar-greeting d-none d-lg-flex">
+      <span id="dynamic-greeting" class="greeting-text"></span>
+    </div>
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mx-auto">
+        <li class="nav-item"><a class="nav-link" href="#home">Inicio</a></li>
+        <li class="nav-item"><a class="nav-link" href="#features">Características y Detalles</a></li>
+        <li class="nav-item"><a class="nav-link" href="#tech">Tecnología Implementada</a></li>
+        <li class="nav-item"><a class="nav-link" href="#multimedia">Multimedia y Previsualización</a></li>
+      </ul>
+      
+      <div class="navbar-actions">
+
+        <!-- Saludo móvil -->
+        <div class="d-lg-none mobile-greeting me-2">
+          <span id="mobile-greeting" class="greeting-text-sm"></span>
+        </div>
+        <button id="theme-toggle" class="btn btn-theme" title="Cambiar tema">
+          <i class="fas fa-moon"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+  <!-- Página Principal -->
+  <section id="home" class="hero-section">
+    <div class="hero-background">
+      <div class="animated-pitch"></div>
+      <div class="stats-overlay">
+        <div class="stat-circle" data-value="95"></div>
+        <div class="stat-circle" data-value="87"></div>
+        <div class="stat-circle" data-value="92"></div>
+      </div>
+    </div>
+    
+    <div class="container">
+      <div class="row align-items-center min-vh-100">
+        <div class="col-lg-6">
+          <div class="hero-content">
+            <div class="badge-platform">PLATAFORMA ANALYTICS</div>
+            <h1 class="hero-title">
+              Donde los 
+              <span class="text-gradient">números</span> 
+              encuentran su 
+              <span class="text-gradient">voz</span>
+            </h1>
+            <p class="hero-description">
+              FutStats combina análisis de datos en tiempo real con la inteligencia colectiva de la comunidad futbolera. Estadísticas avanzadas, visualizaciones interactivas y debates fundamentados.
+            </p>
+            
+            <div class="hero-actions">
+              <a href="#demo" class="btn btn-primary btn-lg">
+                <i class="fas fa-chart-line me-2"></i>
+                Ver Demo Interactivo
+              </a>
+              <a href="#features" class="btn btn-outline-light btn-lg">
+                <i class="fas fa-rocket me-2"></i>
+                Características
+              </a>
+            </div>
+            
+            <div class="hero-stats">
+              <div class="stat-item">
+                <div class="stat-number">500K+</div>
+                <div class="stat-label">Datos en tiempo real</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-number">15+</div>
+                <div class="stat-label">Ligas globales</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-number">Analytics</div>
+                <div class="stat-label">Avanzados</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-lg-6">
+          <div class="hero-visual">
+            <div class="floating-card card-player">
+              <div class="card-header">
+                <span class="player-team">FC Barcelona</span>
+                <span class="player-rating">90</span>
+              </div>
+              <div class="player-name">Pedri</div>
+              <div class="player-stats">
+                <div class="stat">
+                  <span class="label">Goles</span>
+                  <span class="value">2</span>
+                </div>
+                <div class="stat">
+                  <span class="label">Asistencias</span>
+                  <span class="value">6</span>
+                </div>
+                <div class="stat">
+                  <span class="label">Pases</span>
+                  <span class="value">98%</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="floating-card card-graph">
+              <div class="graph-placeholder">
+                <div class="graph-bar" style="height: 80%"></div>
+                <div class="graph-bar" style="height: 65%"></div>
+                <div class="graph-bar" style="height: 90%"></div>
+                <div class="graph-bar" style="height: 75%"></div>
+              </div>
+              <div class="graph-title">Rendimiento Comparativo</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="scroll-indicator">
+      <div class="scroll-arrow"></div>
+    </div>
+  </section>
+
+<!-- Características -->
+<section id="features" class="features-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Potencia tu Análisis Futbolístico</h2>
+      <p>Herramientas diseñadas para fanáticos que van más allá del marcador</p>
+    </div>
+    
+    <!-- Aviso de desarrollo -->
+    <div class="dev-notice">
+      <i class="fas fa-tools me-2"></i>
+      Proyecto en Desarrollo Activo
+      <span class="dev-badge">Nuevas características próximamente</span>
+    </div>
+    
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-4">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-chart-bar"></i>
+          </div>
+          <h4>Estadísticas Avanzadas</h4>
+          <p>Métricas xG, xA, presión, recuperaciones y más. Datos que los medios tradicionales no muestran.</p>
+          <div class="feature-badge" data-badge="PRO">PRO</div>
+        </div>
+      </div>
+      
+      <div class="col-md-6 col-lg-4">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-users"></i>
+          </div>
+          <h4>Comunidad Analítica</h4>
+          <p>Debates fundamentados con estadísticas. Conecta con apasionados que disfrutan del análisis profundo del juego.</p>
+          <div class="community-features">
+            <small> Sistema de reputación • Rankings comunitarios • Debates moderados</small>
+          </div>
+          <div class="feature-badge" data-badge="SOCIAL">SOCIAL</div>
+        </div>
+      </div>
+      
+      <div class="col-md-6 col-lg-4">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-bolt"></i>
+          </div>
+          <h4>Tiempo Real</h4>
+          <p>Actualizaciones en vivo durante partidos con gráficos interactivos. No solo sigas el marcador, entiéndelo.</p>
+          <div class="feature-badge" data-badge="LIVE">LIVE</div>
+        </div>
+      </div>
+      
+      <div class="col-md-6 col-lg-4">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-user-cog"></i>
+          </div>
+          <h4>Perfil Personalizado</h4>
+          <p>Seguimiento inteligente de jugadores favoritos y alertas personalizadas basadas en tu comportamiento.</p>
+          <div class="feature-badge" data-badge="IA">IA</div>
+        </div>
+      </div>
+      
+      <div class="col-md-6 col-lg-4">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-mobile-alt"></i>
+          </div>
+          <h4>Multiplataforma</h4>
+          <p>Experiencia optimizada para desktop, tablet y móvil. Tu análisis te sigue a todas partes.</p>
+          <div class="feature-badge" data-badge="RESPONSIVE">RESPONSIVE</div>
+        </div>
+      </div>
+      
+      <div class="col-md-6 col-lg-4">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <i class="fas fa-database"></i>
+          </div>
+          <h4>Datos Históricos</h4>
+          <p>Acceso a datos pasados con comparativas temporales. Contexto histórico para análisis actuales.</p>
+          <div class="feature-badge" data-badge="ARCHIVE">ARCHIVE</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Sobre la comunidad -->
+    <div class="row mt-5">
+      <div class="col-lg-8 mx-auto">
+        <div class="card bg-transparent border-0 text-center">
+          <div class="card-body">
+            <h4 class="text-primary mb-3">🚀 Más que una App, una Comunidad</h4>
+            <p class="lead">
+              FutStats no es solo otra aplicación de fútbol. Es el punto de encuentro para quienes creemos que los números cuentan historias y las estadísticas enriquecen la pasión.
+            </p>
+            <div class="row mt-4">
+              <div class="col-md-6">
+                <ul class="list-unstyled text-start">
+                  <li class="mb-2">▶️ <strong>Análisis colectivo:</strong> Aprende de otros fanáticos</li>
+                  <li class="mb-2">▶️ <strong>Debates de calidad:</strong> Conversaciones fundamentadas</li>
+                  <li class="mb-2">▶️ <strong>Datos accionables:</strong> Estadísticas que realmente importan</li>
+                </ul>
+              </div>
+              <div class="col-md-6">
+                <ul class="list-unstyled text-start">
+                  <li class="mb-2">▶️ <strong>Comunidad global:</strong> Conecta con fans de todo el mundo</li>
+                  <li class="mb-2">▶️ <strong>Contenido exclusivo:</strong> Insights que no encontrarás en otro lugar</li>
+                  <li class="mb-2">▶️ <strong>Pasíón compartida:</strong> El fútbol nos une a todos</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Stack Tecnológico -->
+<section id="tech" class="tech-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Stack Tecnológico</h2>
+      <p>Construido con las mejores herramientas del desarrollo web moderno</p>
+      <div class="dev-notice mt-3">
+        <i class="fas fa-code-branch me-2"></i>
+        Stack tecnológico sujeto a ajuste durante el desarrollo
+      </div>
+    </div>
+    
+    <div class="tech-stack">
+      <div class="tech-category">
+        <h4>Frontend</h4>
+        <div class="tech-items">
+          <div class="tech-item" data-tooltip="Framework principal - En evaluación final">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg" alt="Angular">
+            <span>Angular</span>
+          </div>
+          <div class="tech-item" data-tooltip="Visualización de datos avanzada">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/d3js/d3js-original.svg" alt="D3.js">
+            <span>D3.js</span>
+          </div>
+          <div class="tech-item" data-tooltip="Framework CSS responsivo">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg" alt="Bootstrap">
+            <span>Bootstrap</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="tech-category">
+        <h4>Backend</h4>
+        <div class="tech-items">
+          <div class="tech-item" data-tooltip="Runtime JavaScript escalable">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Node.js">
+            <span>Node.js</span>
+          </div>
+          <div class="tech-item" data-tooltip="Framework web minimalista">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg" alt="Express">
+            <span>Express</span>
+          </div>
+         
+        </div>
+      </div>
+      
+      <div class="tech-category">
+        <h4>Data & APIs</h4>
+        <div class="tech-items">
+          <div class="tech-item" data-tooltip="Base de datos relacional">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PostgreSQL">
+            <span>PostgreSQL</span>
+          </div>
+          <div class="tech-item" data-tooltip="API de fútbol en tiempo real">
+            <span class="tech-icon">API</span>
+            <span>API-Football</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Multimedia -->
+<section id="multimedia" class="multimedia-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Galería Multimedia</h2>
+      <p>Próximamente: Capturas, demos y videos del proyecto en acción</p>
+    </div>
+    
+    <div class="row g-4">
+      <div class="col-md-6">
+        <div class="multimedia-placeholder">
+          <i class="fas fa-desktop"></i>
+          <h5>Interfaz de Usuario</h5>
+          <p>Capturas de pantalla de las principales vistas y dashboards</p>
+          <small class="text-muted">Disponible en la versión final</small>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="multimedia-placeholder">
+          <i class="fas fa-chart-line"></i>
+          <h5>Gráficos Interactivos</h5>
+          <p>Demostraciones de visualizaciones de datos en tiempo real</p>
+          <small class="text-muted">Disponible en la versión final</small>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="multimedia-placeholder">
+          <i class="fas fa-mobile-alt"></i>
+          <h5>Versión Móvil</h5>
+          <p>Experiencia optimizada para dispositivos smartphones</p>
+          <small class="text-muted">Disponible en la versión final</small>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="multimedia-placeholder">
+          <i class="fas fa-video"></i>
+          <h5>Video Demo</h5>
+          <p>Recorrido completo por las funcionalidades principales</p>
+          <small class="text-muted">Disponible en la versión final</small>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="footer-brand">
+            <span class="logo-icon">⚽</span>
+            <strong>FutStats</strong>
+          </div>
+          <p class="footer-description">
+            Plataforma de analytics futbolístico que combina datos en tiempo real con la aportación colectiva de la comunidad.
+          </p>
+        </div>
+        
+        <div class="col-lg-6">
+          <div class="footer-info">
+            <p><strong>Proyecto Académico</strong></p>
+            <p>Desarrollo Web - Cuarto Semestre 2025</p>
+            <p>Universidad - Computer Science</p>
+            <p class="student-info">Creado por Víctor Saravia - Carné 20240060</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="footer-bottom">
+        <p>&copy; 2025 FutStats. </p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="design.js"></script>
+</body>
+</html>
