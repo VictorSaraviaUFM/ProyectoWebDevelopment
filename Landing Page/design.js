@@ -166,3 +166,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
   console.log('FutStats - Landing Page cargada con éxito 🚀');
 });
+
+
+  // Solo agregar esta nueva función para los badges de características
+  function initFeatureBadges() {
+    const badges = document.querySelectorAll('.feature-badge');
+    badges.forEach(badge => {
+      badge.addEventListener('mouseenter', function() {
+        this.style.transform = 'scale(1.1) rotate(5deg)';
+      });
+      
+      badge.addEventListener('mouseleave', function() {
+        this.style.transform = 'scale(1) rotate(0deg)';
+      });
+    });
+  }
+  
+  initFeatureBadges();
+  
+  console.log('FutStats - Landing Page mejorada cargada con éxito ⚽🎯');
