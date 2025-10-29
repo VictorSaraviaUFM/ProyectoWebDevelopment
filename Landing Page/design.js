@@ -1,4 +1,6 @@
-// design.js - VERSION MEJORADA CON MÁS INTERACTIVIDAD
+// design.js - CORREGIR ERROR DE SINTAXIS
+// Tu archivo tiene un error - la función initFeatureBadges está duplicada
+// Aquí está la versión corregida:
 
 document.addEventListener('DOMContentLoaded', () => {
   // Navbar scroll animation mejorada
@@ -164,11 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   createParticles();
 
-  console.log('FutStats - Landing Page cargada con éxito 🚀');
-});
-
-
-  // Solo agregar esta nueva función para los badges de características
+  // Función para los badges de características - SOLO UNA VEZ
   function initFeatureBadges() {
     const badges = document.querySelectorAll('.feature-badge');
     badges.forEach(badge => {
@@ -185,3 +183,4 @@ document.addEventListener('DOMContentLoaded', () => {
   initFeatureBadges();
   
   console.log('FutStats - Landing Page mejorada cargada con éxito ⚽🎯');
+});

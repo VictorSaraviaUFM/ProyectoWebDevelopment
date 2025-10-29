@@ -783,3 +783,59 @@ body.dark-mode .multimedia-placeholder:hover {
     padding: 1rem;
   }
 }
+
+/* Agregar estas mejoras de contraste al CSS */
+
+/* Mejorar contraste en dark mode */
+body.dark-mode {
+  background: var(--darker);
+  color: var(--text-dark);
+}
+
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode h4,
+body.dark-mode h5,
+body.dark-mode h6 {
+  color: #ffffff; /* Blanco puro para mejor contraste */
+}
+
+body.dark-mode .feature-card h4,
+body.dark-mode .tech-item span:last-child {
+  color: #ffffff; /* Blanco puro */
+}
+
+body.dark-mode .feature-card p,
+body.dark-mode .section-header p {
+  color: #e2e8f0; /* Gris más claro para mejor legibilidad */
+}
+
+body.dark-mode .multimedia-placeholder {
+  color: #e2e8f0; /* Mejor contraste en placeholders */
+}
+
+body.dark-mode .multimedia-placeholder h5 {
+  color: #ffffff; /* Títulos en blanco */
+}
+
+body.dark-mode .card-body .lead {
+  color: #e2e8f0; /* Texto lead mejorado */
+}
+
+body.dark-mode .list-unstyled li {
+  color: #e2e8f0; /* Items de lista mejorados */
+}
+
+body.dark-mode .list-unstyled strong {
+  color: #ffffff; /* Texto en negrita en blanco */
+}
+
+/* Mejorar contraste específico para la sección de comunidad */
+body.dark-mode .card.bg-transparent .text-primary {
+  color: #60a5fa !important; /* Azul más claro para dark mode */
+}
+
+body.dark-mode .community-features small {
+  color: #cbd5e1; /* Texto pequeño mejorado */
+}
