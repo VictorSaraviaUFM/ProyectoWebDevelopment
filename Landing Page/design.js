@@ -1,6 +1,3 @@
-// design.js - CORREGIR ERROR DE SINTAXIS
-// Tu archivo tiene un error - la función initFeatureBadges está duplicada
-// Aquí está la versión corregida:
 
 document.addEventListener('DOMContentLoaded', () => {
   // Navbar scroll animation mejorada
@@ -55,6 +52,51 @@ document.addEventListener('DOMContentLoaded', () => {
         toggleBtn.style.transform = 'scale(1)';
       }, 150);
     });
+  }
+
+  // SALUDO DINÁMICO - FUNCIÓN CORREGIDA
+  function initDynamicGreeting() {
+    const greetingElement = document.getElementById('dynamic-greeting');
+    const mobileGreetingElement = document.getElementById('mobile-greeting');
+    
+    function updateGreeting() {
+      const now = new Date();
+      const hour = now.getHours();
+      
+      let greeting, emoji;
+      
+      if (hour >= 5 && hour < 12) {
+        greeting = "Buenos días";
+        emoji = "☀️";
+      } else if (hour >= 12 && hour < 18) {
+        greeting = "Buenas tardes";
+        emoji = "🌤️";
+      } else {
+        greeting = "Buenas noches";
+        emoji = "🌙";
+      }
+      
+      const timeString = now.toLocaleTimeString('es-ES', { 
+        hour: '2-digit', 
+        minute: '2-digit' 
+      });
+      
+      // Desktop: con hora
+      if (greetingElement) {
+        greetingElement.textContent = `${emoji} ${greeting} • ${timeString}`;
+      }
+      
+      // Móvil: solo saludo
+      if (mobileGreetingElement) {
+        mobileGreetingElement.textContent = `${emoji} ${greeting}`;
+      }
+    }
+    
+    // Actualizar inmediatamente
+    updateGreeting();
+    
+    // Actualizar cada minuto
+    setInterval(updateGreeting, 60000);
   }
 
   // Animación de números contadores
@@ -166,7 +208,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   createParticles();
 
-  // Función para los badges de características - SOLO UNA VEZ
+  // Función para los badges de características
   function initFeatureBadges() {
     const badges = document.querySelectorAll('.feature-badge');
     badges.forEach(badge => {
@@ -179,8 +221,53 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   }
+  // FUNCIÓN DEL SALUDO - Reemplazar en design.js
+function initDynamicGreeting() {
+  const greetingElement = document.getElementById('dynamic-greeting');
+  const mobileGreetingElement = document.getElementById('mobile-greeting');
   
+  function updateGreeting() {
+    const now = new Date();
+    const hour = now.getHours();
+    
+    let greeting, emoji;
+    
+    if (hour >= 5 && hour < 12) {
+      greeting = "Buenos días";
+      emoji = "☀️";
+    } else if (hour >= 12 && hour < 18) {
+      greeting = "Buenas tardes";
+      emoji = "🌤️";
+    } else {
+      greeting = "Buenas noches";
+      emoji = "🌙";
+    }
+    
+    const timeString = now.toLocaleTimeString('es-ES', { 
+      hour: '2-digit', 
+      minute: '2-digit' 
+    });
+    
+    // Desktop: con hora
+    if (greetingElement) {
+      greetingElement.textContent = `${emoji} ${greeting} • ${timeString}`;
+    }
+    
+    // Móvil: solo saludo
+    if (mobileGreetingElement) {
+      mobileGreetingElement.textContent = `${emoji} ${greeting}`;
+    }
+  }
+  
+  // Actualizar inmediatamente
+  updateGreeting();
+  
+  // Actualizar cada minuto
+  setInterval(updateGreeting, 60000);
+}
+
+// Y en el DOMContentLoaded, agregar esta línea:
+initDynamicGreeting();
+
   initFeatureBadges();
-  
-  console.log('FutStats - Landing Page mejorada cargada con éxito ⚽🎯');
 });

@@ -17,35 +17,47 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg fixed-top">
-    <div class="container">
-      <a class="navbar-brand" href="#home">
-        <span class="logo-icon">⚽</span>
-        <strong>FutStats Landing Page</strong>
-        <span class="beta-badge">BETA</span>
-      </a>
+
+
+ <!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="#home">
+      <span class="logo-icon">⚽</span>
+      <strong>FutStats</strong>
+      <span class="beta-badge">BETA</span>
+    </a>
+    
+    <!-- Saludo  -->
+    <div class="navbar-greeting d-none d-lg-flex">
+      <span id="dynamic-greeting" class="greeting-text"></span>
+    </div>
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav mx-auto">
+        <li class="nav-item"><a class="nav-link" href="#home">Inicio</a></li>
+        <li class="nav-item"><a class="nav-link" href="#features">Características y Detalles</a></li>
+        <li class="nav-item"><a class="nav-link" href="#tech">Tecnología Implementada</a></li>
+        <li class="nav-item"><a class="nav-link" href="#multimedia">Multimedia y Previsualización</a></li>
+      </ul>
       
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav mx-auto">
-          <li class="nav-item"><a class="nav-link" href="#home">Inicio</a></li>
-          <li class="nav-item"><a class="nav-link" href="#features">Características y Detalles</a></li>
-          <li class="nav-item"><a class="nav-link" href="#tech">Tecnología Implementada</a></li>
-          <li class="nav-item"><a class="nav-link" href="#multimedia">Multimedia y Previsualización</a></li>
-        </ul>
-        
-        <div class="navbar-actions">
-          <button id="theme-toggle" class="btn btn-theme" title="Cambiar tema">
-            <i class="fas fa-moon"></i>
-          </button>
+      <div class="navbar-actions">
+
+        <!-- Saludo móvil -->
+        <div class="d-lg-none mobile-greeting me-2">
+          <span id="mobile-greeting" class="greeting-text-sm"></span>
         </div>
+        <button id="theme-toggle" class="btn btn-theme" title="Cambiar tema">
+          <i class="fas fa-moon"></i>
+        </button>
       </div>
     </div>
-  </nav>
+  </div>
+</nav>
 
   <!-- Página Principal -->
   <section id="home" class="hero-section">
@@ -105,22 +117,22 @@
           <div class="hero-visual">
             <div class="floating-card card-player">
               <div class="card-header">
-                <span class="player-team">Real Madrid</span>
-                <span class="player-rating">94</span>
+                <span class="player-team">FC Barcelona</span>
+                <span class="player-rating">90</span>
               </div>
-              <div class="player-name">Jude Bellingham</div>
+              <div class="player-name">Pedri</div>
               <div class="player-stats">
                 <div class="stat">
                   <span class="label">Goles</span>
-                  <span class="value">18</span>
+                  <span class="value">2</span>
                 </div>
                 <div class="stat">
                   <span class="label">Asistencias</span>
-                  <span class="value">12</span>
+                  <span class="value">6</span>
                 </div>
                 <div class="stat">
                   <span class="label">Pases</span>
-                  <span class="value">92%</span>
+                  <span class="value">98%</span>
                 </div>
               </div>
             </div>

@@ -839,3 +839,54 @@ body.dark-mode .card.bg-transparent .text-primary {
 body.dark-mode .community-features small {
   color: #cbd5e1; /* Texto pequeño mejorado */
 }
+/* ESTILOS PARA EL SALUDO - Agregar al final de style.css */
+
+/* Saludo para desktop - entre logo y menú */
+.navbar-greeting {
+  margin-left: 2rem;
+  display: flex;
+  align-items: center;
+}
+
+.greeting-text {
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 500;
+  font-size: 0.9rem;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.4rem 0.8rem;
+  border-radius: 1rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  white-space: nowrap;
+}
+
+/* Saludo para móvil */
+.mobile-greeting .greeting-text-sm {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.8rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+/* Asegurar que no se superponga en responsive */
+@media (max-width: 991.98px) {
+  .navbar-greeting {
+    display: none !important;
+  }
+}
+
+@media (max-width: 576px) {
+  .mobile-greeting .greeting-text-sm {
+    font-size: 0.75rem;
+  }
+}
+
+/* Dark mode */
+body.dark-mode .greeting-text,
+body.dark-mode .greeting-text-sm {
+  color: rgba(255, 255, 255, 0.95);
+}
+
+body.dark-mode .greeting-text {
+  background: rgba(255, 255, 255, 0.15);
+}
