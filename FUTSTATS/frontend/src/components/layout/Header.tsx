@@ -1,13 +1,19 @@
-import { Link, useLocation } from "react-router-dom";
-import { Trophy, Moon, Sun } from "lucide-react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Trophy, Moon, Sun, User, LogOut } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { useAuth } from '@/contexts/AuthContexts';
+import AuthModal from '@/components/auth/AuthModal';
 
 const Header = () => {
   const location = useLocation();
+  const navigate = useNavigate();
   const [darkMode, setDarkMode] = useState(true);
   const [greeting, setGreeting] = useState("");
   const [time, setTime] = useState("");
+  const { user, logout } = useAuth();
+  const [authModalOpen, setAuthModalOpen] = useState(false);
   
   useEffect(() => {
     const updateTime = () => {
@@ -32,6 +38,11 @@ const Header = () => {
   }, []);
   
   const isActive = (path: string) => location.pathname === path;
+
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+  };
   
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/50 glass backdrop-blur-xl">
@@ -100,6 +111,37 @@ const Header = () => {
               <span className="text-sm font-medium text-foreground">{greeting}</span>
               <span className="text-sm text-muted-foreground">• {time}</span>
             </div>
+
+            {user ? (
+              <div className="flex items-center gap-3">
+                <span className="text-sm text-foreground hidden sm:block">Hola, {user.username}</span>
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={() => navigate('/profile')}
+                  className="border-primary/30"
+                >
+                  <User className="h-4 w-4 mr-2" />
+                  Perfil
+                </Button>
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  onClick={handleLogout}
+                  className="text-muted-foreground hover:text-foreground"
+                >
+                  <LogOut className="h-4 w-4" />
+                </Button>
+              </div>
+            ) : (
+              <Button 
+                onClick={() => setAuthModalOpen(true)}
+                className="bg-gradient-primary hover:opacity-90"
+              >
+                Iniciar Sesión
+              </Button>
+            )}
+
             <button
               onClick={() => setDarkMode(!darkMode)}
               className="flex h-11 w-11 items-center justify-center rounded-full bg-secondary/50 border border-border/50 hover:bg-secondary transition-colors"
@@ -113,6 +155,8 @@ const Header = () => {
           </div>
         </div>
       </div>
+
+      <AuthModal open={authModalOpen} onOpenChange={setAuthModalOpen} />
     </header>
   );
 };

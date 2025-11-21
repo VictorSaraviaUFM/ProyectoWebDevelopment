@@ -1,5 +1,6 @@
 export interface Player {
-  id: number;
+  id?: number;
+  _id?: string;
   name: string;
   team: string;
   position: string;
@@ -12,7 +13,8 @@ export interface Player {
 }
 
 export interface Team {
-  id: number;
+  id?: number;
+  _id?: string;
   name: string;
   logo: string;
   wins: number;

@@ -2,12 +2,29 @@ import { Player } from "@/data/mockData";
 import { Card } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
+import { Star } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContexts";
 
 interface PlayerCardProps {
   player: Player;
+  showFavoriteButton?: boolean;
+  isFavorite?: boolean;
+  onToggleFavorite?: (playerId: string) => void;
 }
 
-const PlayerCard = ({ player }: PlayerCardProps) => {
+const PlayerCard = ({ player, showFavoriteButton = false, isFavorite = false, onToggleFavorite }: PlayerCardProps) => {
+  const { user } = useAuth();
+
+  const handleFavoriteClick = () => {
+    if (onToggleFavorite && user) {
+      // Usar _id si existe (de MongoDB), sino id (de mock data)
+      const playerId = player._id || player.id?.toString();
+      if (playerId) {
+        onToggleFavorite(playerId);
+      }
+    }
+  };
+
   return (
     <Card className="group overflow-hidden glass-card border-white/10 shadow-glass hover:shadow-glow transition-all duration-300 hover:scale-105">
       <div className="p-6">
@@ -22,9 +39,23 @@ const PlayerCard = ({ player }: PlayerCardProps) => {
             <h3 className="font-bold text-lg text-foreground mb-1">{player.name}</h3>
             <p className="text-sm text-muted-foreground">{player.team}</p>
           </div>
-          <Badge className="bg-gradient-primary text-white border-0 shadow-glow">
-            {player.rating}
-          </Badge>
+          <div className="flex flex-col items-end gap-2">
+            <Badge className="bg-gradient-primary text-white border-0 shadow-glow">
+              {player.rating}
+            </Badge>
+            {showFavoriteButton && user && (
+              <button
+                onClick={handleFavoriteClick}
+                className={`p-1 rounded-full transition-all ${
+                  isFavorite 
+                    ? 'text-yellow-500 bg-yellow-500/20' 
+                    : 'text-muted-foreground hover:text-yellow-500 hover:bg-yellow-500/10'
+                }`}
+              >
+                <Star className={`h-4 w-4 ${isFavorite ? 'fill-current' : ''}`} />
+              </button>
+            )}
+          </div>
         </div>
         
         <div className="space-y-2">

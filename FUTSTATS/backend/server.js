@@ -5,6 +5,8 @@ import dotenv from 'dotenv';
 import playerRoutes from './routes/players.js';
 import teamRoutes from './routes/teams.js';
 import commentRoutes from './routes/comments.js';
+import authRoutes from './routes/auth.js';
+import userRoutes from './routes/users.js';
 
 dotenv.config();
 
@@ -19,6 +21,8 @@ app.use(express.json());
 app.use('/api/players', playerRoutes);
 app.use('/api/teams', teamRoutes);
 app.use('/api/comments', commentRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/users', userRoutes);
 
 // MongoDB connection
 const connectDB = async () => {

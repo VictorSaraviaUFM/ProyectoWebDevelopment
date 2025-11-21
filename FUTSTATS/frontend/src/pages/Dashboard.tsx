@@ -6,12 +6,70 @@ import PlayerCard from "@/components/PlayerCard";
 import TeamCard from "@/components/TeamCard";
 import MatchCard from "@/components/MatchCard";
 import StatsTable from "@/components/StatsTable";
-import { mockPlayers, mockTeams, mockMatches } from "@/data/mockData";
+import { apiService } from "@/api";
+import { useEffect, useState } from "react";
+
+// Mantenemos matches como mock por ahora (no hay endpoint)
+const mockMatches = [
+  {
+    id: 1,
+    homeTeam: "Manchester City",
+    awayTeam: "Arsenal", 
+    homeScore: 2,
+    awayScore: 1,
+    date: "2024-03-31",
+    status: "finished" as const,
+    homeLogo: "/placeholder.svg",
+    awayLogo: "/placeholder.svg"
+  },
+  {
+    id: 2,
+    homeTeam: "Real Madrid",
+    awayTeam: "Barcelona",
+    homeScore: 3,
+    awayScore: 2,
+    date: "2024-04-21",
+    status: "live" as const,
+    homeLogo: "/placeholder.svg", 
+    awayLogo: "/placeholder.svg"
+  }
+];
 
 const Dashboard = () => {
-  const topPlayers = mockPlayers.slice(0, 3);
+  const [players, setPlayers] = useState<any[]>([]);
+  const [teams, setTeams] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [playersData, teamsData] = await Promise.all([
+          apiService.getPlayers(),
+          apiService.getTeams()
+        ]);
+        setPlayers(playersData);
+        setTeams(teamsData);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  const topPlayers = players.slice(0, 3);
   const recentMatches = mockMatches.filter(m => m.status === "finished").slice(0, 2);
   const liveMatches = mockMatches.filter(m => m.status === "live");
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-gradient text-xl">Cargando datos...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background relative overflow-hidden">
@@ -26,7 +84,7 @@ const Dashboard = () => {
                 <Trophy className="h-5 w-5 text-white" />
               </div>
               <div>
-                <div className="text-2xl font-bold text-gradient">247</div>
+                <div className="text-2xl font-bold text-gradient">{teams.length}</div>
                 <div className="text-sm text-muted-foreground">Equipos</div>
               </div>
             </div>
@@ -38,7 +96,7 @@ const Dashboard = () => {
                 <Users className="h-5 w-5 text-white" />
               </div>
               <div>
-                <div className="text-2xl font-bold text-accent">3,842</div>
+                <div className="text-2xl font-bold text-accent">{players.length}</div>
                 <div className="text-sm text-muted-foreground">Jugadores</div>
               </div>
             </div>
@@ -92,7 +150,7 @@ const Dashboard = () => {
           <h2 className="text-2xl font-bold text-foreground mb-6">Top Jugadores</h2>
           <div className="grid md:grid-cols-3 gap-6">
             {topPlayers.map((player) => (
-              <PlayerCard key={player.id} player={player} />
+              <PlayerCard key={player._id} player={player} />
             ))}
           </div>
         </div>
@@ -101,8 +159,8 @@ const Dashboard = () => {
         <div className="mb-12">
           <h2 className="text-2xl font-bold text-foreground mb-6">Equipos Destacados</h2>
           <div className="grid md:grid-cols-3 gap-6">
-            {mockTeams.slice(0, 3).map((team) => (
-              <TeamCard key={team.id} team={team} />
+            {teams.slice(0, 3).map((team) => (
+              <TeamCard key={team._id} team={team} />
             ))}
           </div>
         </div>
@@ -120,7 +178,7 @@ const Dashboard = () => {
         {/* League Table */}
         <div>
           <h2 className="text-2xl font-bold text-foreground mb-6">Tabla de Clasificación</h2>
-          <StatsTable teams={mockTeams} />
+          <StatsTable teams={teams} />
         </div>
       </div>
     </div>

@@ -3,60 +3,71 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
-import { Heart, MessageCircle, Share2, MoreHorizontal } from "lucide-react";
+import { Heart, MessageCircle, Share2, MoreHorizontal, Send } from "lucide-react";
 import BackgroundParticles from "@/components/BackgroundParticles";
+import { apiService } from "@/api";
+import { useAuth } from "@/contexts/AuthContexts";
+import { useEffect, useState } from "react";
 
 const Comments = () => {
-  const comments = [
-    {
-      id: 1,
-      user: {
-        name: "María García",
-        username: "@mariafut",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Maria"
-      },
-      content: "¡Increíble partido el de anoche! El Real Madrid demostró por qué es el rey de Europa. Esa jugada de Modrić fue MAGISTRAL 🔥",
-      likes: 234,
-      replies: 18,
-      time: "hace 2h"
-    },
-    {
-      id: 2,
-      user: {
-        name: "Juan Pérez",
-        username: "@juandeportes",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Juan"
-      },
-      content: "No puedo creer que el árbitro no pitara ese penalti. Las estadísticas claramente muestran que fue falta dentro del área. VAR dónde estás? 🤦‍♂️",
-      likes: 89,
-      replies: 45,
-      time: "hace 4h"
-    },
-    {
-      id: 3,
-      user: {
-        name: "Ana López",
-        username: "@analopezfut",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Ana"
-      },
-      content: "Haaland va camino de romper todos los récords esta temporada. 23 goles en 15 partidos es una locura. Mejor fichaje de la Premier League sin duda 👑",
-      likes: 412,
-      replies: 67,
-      time: "hace 6h"
-    },
-    {
-      id: 4,
-      user: {
-        name: "Carlos Ruiz",
-        username: "@carlosanalytics",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Carlos2"
-      },
-      content: "Análisis táctico: El Barcelona está dominando la posesión con un 68% de media, pero la efectividad en el último tercio es solo del 42%. Necesitan mejorar la finalización.",
-      likes: 156,
-      replies: 23,
-      time: "hace 8h"
+  const { user } = useAuth();
+  const [comments, setComments] = useState<any[]>([]);
+  const [newComment, setNewComment] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
+
+  useEffect(() => {
+    fetchComments();
+  }, []);
+
+  const fetchComments = async () => {
+    try {
+      const commentsData = await apiService.getComments();
+      setComments(commentsData);
+    } catch (error) {
+      console.error('Error fetching comments:', error);
+    } finally {
+      setLoading(false);
     }
-  ];
+  };
+
+  const handleSubmitComment = async () => {
+    if (!newComment.trim() || !user) return;
+
+    setSubmitting(true);
+    try {
+      const commentData = {
+        user: user.username,
+        content: newComment,
+        likes: 0
+      };
+
+      await apiService.createComment(commentData);
+      setNewComment("");
+      fetchComments(); // Recargar comentarios
+    } catch (error) {
+      console.error('Error creating comment:', error);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handleLike = async (commentId: string) => {
+    // En una implementación real, haríamos un PATCH para actualizar los likes
+    setComments(prev => prev.map(comment => 
+      comment._id === commentId 
+        ? { ...comment, likes: comment.likes + 1 }
+        : comment
+    ));
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-gradient text-xl">Cargando comentarios...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background relative overflow-hidden">
@@ -75,18 +86,37 @@ const Comments = () => {
           <div className="p-6">
             <div className="flex gap-4">
               <Avatar className="h-12 w-12 border-2 border-primary/30">
-                <AvatarImage src="https://api.dicebear.com/7.x/avataaars/svg?seed=CurrentUser" />
-                <AvatarFallback className="bg-gradient-primary text-white">TU</AvatarFallback>
+                <AvatarImage src={user?.avatar} />
+                <AvatarFallback className="bg-gradient-primary text-white">
+                  {user ? user.username.charAt(0).toUpperCase() : "U"}
+                </AvatarFallback>
               </Avatar>
               <div className="flex-1">
                 <Textarea 
-                  placeholder="¿Qué opinas sobre el partido de hoy?"
+                  placeholder={user ? "¿Qué opinas sobre el partido de hoy?" : "Inicia sesión para comentar"}
+                  value={newComment}
+                  onChange={(e) => setNewComment(e.target.value)}
+                  disabled={!user || submitting}
                   className="mb-4 bg-secondary/30 border-border/50 focus:border-primary/50 resize-none"
                   rows={3}
                 />
-                <div className="flex justify-end">
-                  <Button className="bg-gradient-primary text-white hover:opacity-90">
-                    Publicar Comentario
+                <div className="flex justify-between items-center">
+                  <div className="text-sm text-muted-foreground">
+                    {user ? `${comments.length} comentarios en la comunidad` : "Debes iniciar sesión para comentar"}
+                  </div>
+                  <Button 
+                    onClick={handleSubmitComment}
+                    disabled={!user || !newComment.trim() || submitting}
+                    className="bg-gradient-primary text-white hover:opacity-90"
+                  >
+                    {submitting ? (
+                      "Publicando..."
+                    ) : (
+                      <>
+                        <Send className="h-4 w-4 mr-2" />
+                        Publicar
+                      </>
+                    )}
                   </Button>
                 </div>
               </div>
@@ -96,50 +126,64 @@ const Comments = () => {
 
         {/* Comments Feed */}
         <div className="space-y-6">
-          {comments.map((comment) => (
-            <Card key={comment.id} className="glass-card border-white/10 shadow-glass hover:border-primary/20 transition-all">
-              <div className="p-6">
-                <div className="flex gap-4">
-                  <Avatar className="h-12 w-12 border-2 border-primary/30">
-                    <AvatarImage src={comment.user.avatar} alt={comment.user.name} />
-                    <AvatarFallback className="bg-gradient-primary text-white">
-                      {comment.user.name.split(" ").map(n => n[0]).join("")}
-                    </AvatarFallback>
-                  </Avatar>
-                  
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="font-semibold text-foreground">{comment.user.name}</span>
-                      <span className="text-muted-foreground text-sm">{comment.user.username}</span>
-                      <span className="text-muted-foreground text-sm">• {comment.time}</span>
-                    </div>
+          {comments.length === 0 ? (
+            <Card className="glass-card border-white/10 shadow-glass">
+              <div className="p-8 text-center">
+                <MessageCircle className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                <h3 className="text-xl font-bold text-foreground mb-2">No hay comentarios aún</h3>
+                <p className="text-muted-foreground">Sé el primero en compartir tu opinión sobre fútbol</p>
+              </div>
+            </Card>
+          ) : (
+            comments.map((comment) => (
+              <Card key={comment._id} className="glass-card border-white/10 shadow-glass hover:border-primary/20 transition-all">
+                <div className="p-6">
+                  <div className="flex gap-4">
+                    <Avatar className="h-12 w-12 border-2 border-primary/30">
+                      <AvatarImage src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${comment.user}`} />
+                      <AvatarFallback className="bg-gradient-primary text-white">
+                        {comment.user?.charAt(0)?.toUpperCase() || "U"}
+                      </AvatarFallback>
+                    </Avatar>
                     
-                    <p className="text-foreground/90 mb-4">{comment.content}</p>
-                    
-                    <div className="flex items-center gap-6">
-                      <button className="flex items-center gap-2 text-muted-foreground hover:text-accent transition-colors group">
-                        <Heart className="h-4 w-4 group-hover:fill-accent" />
-                        <span className="text-sm">{comment.likes}</span>
-                      </button>
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="font-semibold text-foreground">{comment.user}</span>
+                        <Badge variant="outline" className="text-xs">
+                          {new Date(comment.createdAt).toLocaleDateString('es-ES')}
+                        </Badge>
+                      </div>
                       
-                      <button className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
-                        <MessageCircle className="h-4 w-4" />
-                        <span className="text-sm">{comment.replies}</span>
-                      </button>
+                      <p className="text-foreground/90 mb-4">{comment.content}</p>
                       
-                      <button className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
-                        <Share2 className="h-4 w-4" />
-                      </button>
-                      
-                      <button className="ml-auto text-muted-foreground hover:text-foreground transition-colors">
-                        <MoreHorizontal className="h-4 w-4" />
-                      </button>
+                      <div className="flex items-center gap-6">
+                        <button 
+                          onClick={() => handleLike(comment._id)}
+                          className="flex items-center gap-2 text-muted-foreground hover:text-accent transition-colors group"
+                        >
+                          <Heart className="h-4 w-4 group-hover:fill-accent" />
+                          <span className="text-sm">{comment.likes}</span>
+                        </button>
+                        
+                        <button className="flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors">
+                          <MessageCircle className="h-4 w-4" />
+                          <span className="text-sm">Responder</span>
+                        </button>
+                        
+                        <button className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
+                          <Share2 className="h-4 w-4" />
+                        </button>
+                        
+                        <button className="ml-auto text-muted-foreground hover:text-foreground transition-colors">
+                          <MoreHorizontal className="h-4 w-4" />
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </Card>
-          ))}
+              </Card>
+            ))
+          )}
         </div>
       </div>
     </div>
