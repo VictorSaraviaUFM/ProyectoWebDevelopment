@@ -15,4 +15,12 @@ export default defineConfig(({ mode }) => ({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    outDir: 'dist',
+    sourcemap: mode !== 'production',
+    chunkSizeWarningLimit: 1600,
+  },
+  define: {
+    'process.env': {}
+  }
 }));

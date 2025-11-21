@@ -16,17 +16,32 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-// Middleware CORS para producción
+// Configuración CORS para producción
+const allowedOrigins = [
+  'http://localhost:5173',
+  'http://localhost:8080',
+  'https://futstats-frontend.vercel.app', // Reemplaza con tu dominio real de Vercel
+  'https://*.vercel.app'
+];
+
 app.use(cors({
-  origin: [
-    'http://localhost:5173',
-    'https://futstats-frontend.vercel.app', // Actualizar con tu dominio de Vercel
-    'https://*.vercel.app'
-  ],
+  origin: function (origin, callback) {
+    // Permitir requests sin origin (como mobile apps o curl requests)
+    if (!origin) return callback(null, true);
+    
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = 'The CORS policy for this site does not allow access from the specified Origin.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With']
 }));
+
+// Middleware para preflight requests
+app.options('*', cors());
 
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
@@ -39,7 +54,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/matches', matchRoutes);
 
-// Health check endpoint (importante para Render)
+// Health check endpoint
 app.get('/api/health', (req, res) => {
   res.status(200).json({ 
     status: 'OK', 
@@ -64,24 +79,19 @@ app.get('/', (req, res) => {
   });
 });
 
-// MongoDB connection con mejores opciones
+// MongoDB connection
 const connectDB = async () => {
   try {
     const conn = await mongoose.connect(process.env.MONGODB_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });
-    console.log(`MongoDB Connected: ${conn.connection.host}`);
+    console.log(` MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
     console.error('MongoDB connection error:', error);
     process.exit(1);
   }
 };
-
-// Manejo de errores global
-process.on('unhandledRejection', (err, promise) => {
-  console.log('Unhandled Rejection at:', promise, 'reason:', err);
-});
 
 // Iniciar servidor
 connectDB().then(() => {
@@ -91,6 +101,7 @@ FutStats Backend Server Running!
 Port: ${PORT}
 Environment: ${process.env.NODE_ENV || 'development'}
 MongoDB: ${mongoose.connection.readyState === 1 ? 'Connected' : 'Disconnected'}
+CORS Enabled for: ${allowedOrigins.join(', ')}
     `);
   });
 });
