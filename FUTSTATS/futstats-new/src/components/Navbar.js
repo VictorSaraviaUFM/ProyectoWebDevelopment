@@ -1,53 +1,41 @@
-import React from 'react';
-import { Navbar, Nav, Container } from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap';
-import { FaChartBar, FaFutbol, FaStar, FaUser } from 'react-icons/fa';
+import { Navbar, Nav, Container } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
-const CustomNavbar = () => {
+export default function AppNavbar() {
   return (
-    <Navbar bg="dark" variant="dark" expand="lg" fixed="top" className="futstats-navbar">
+    <Navbar bg="dark" variant="dark" expand="lg" className="py-3 shadow-sm">
       <Container>
-        <Navbar.Brand href="/" className="d-flex align-items-center">
-          <span className="logo-icon">⚽</span>
-          <strong>FutStats</strong>
-          <span className="beta-badge">BETA</span>
+        <Navbar.Brand as={Link} to="/" className="fw-bold text-primary">
+          FUTSTATS
         </Navbar.Brand>
-        
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
-          <Nav className="me-auto">
-            <LinkContainer to="/">
-              <Nav.Link>
-                <FaChartBar className="me-1" />
-                Dashboard
-              </Nav.Link>
-            </LinkContainer>
-            <LinkContainer to="/stats">
-              <Nav.Link>
-                <FaFutbol className="me-1" />
-                Estadísticas
-              </Nav.Link>
-            </LinkContainer>
-            <LinkContainer to="/favorites">
-              <Nav.Link>
-                <FaStar className="me-1" />
-                Mis Favoritos
-              </Nav.Link>
-            </LinkContainer>
-          </Nav>
-          
-          <Nav>
-            <LinkContainer to="/profile">
-              <Nav.Link>
-                <FaUser className="me-1" />
-                Mi Perfil
-              </Nav.Link>
-            </LinkContainer>
+
+        <Navbar.Toggle aria-controls="main-navbar" />
+        <Navbar.Collapse id="main-navbar">
+          <Nav className="ms-auto">
+
+            <Nav.Link as={Link} to="/dashboard">
+              Dashboard
+            </Nav.Link>
+
+            <Nav.Link as={Link} to="/players">
+              Jugadores
+            </Nav.Link>
+
+            <Nav.Link as={Link} to="/teams">
+              Equipos
+            </Nav.Link>
+
+            <Nav.Link as={Link} to="/comments">
+              Opiniones
+            </Nav.Link>
+
+            <Nav.Link as={Link} to="/profile">
+              Perfil
+            </Nav.Link>
+
           </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>
   );
-};
-
-export default CustomNavbar;
+}
