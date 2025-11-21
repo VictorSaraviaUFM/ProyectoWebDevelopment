@@ -2,6 +2,7 @@ import axios from "axios";
 
 const API_URL = "http://localhost:5000/api";
 
+
 export async function registerUser(data) {
   const res = await fetch(`${API_URL}/users/register`, {
     method: "POST",
@@ -12,6 +13,7 @@ export async function registerUser(data) {
   return res.json();
 }
 
+
 export async function loginUser(data) {
   const res = await fetch(`${API_URL}/users/login`, {
     method: "POST",
@@ -21,6 +23,7 @@ export async function loginUser(data) {
 
   return res.json();
 }
+
 
 
 const API = axios.create({

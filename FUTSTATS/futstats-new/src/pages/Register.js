@@ -1,66 +1,90 @@
 import React, { useState } from "react";
-import { registerUser } from "../services/api";
-import { useNavigate } from "react-router-dom";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
-const Register = () => {
-  const navigate = useNavigate();
-  const [name, setName] = useState("");
+function Register() {
+  const [nombre, setNombre] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+  const [confirmar, setConfirmar] = useState("");
+  const [mensaje, setMensaje] = useState("");
 
-  const handleRegister = async () => {
-    const res = await registerUser({ name, email, password });
+  const handleRegister = async (e) => {
+    e.preventDefault();
 
-    if (res.success) {
-      setSuccess("Cuenta creada correctamente.");
-      setTimeout(() => navigate("/login"), 1500);
-    } else {
-      setError(res.message || "Error al registrar usuario");
+    if (password !== confirmar) {
+      setMensaje("Las contraseñas no coinciden.");
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:5000/api/auth/register", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nombre, email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setMensaje("Registro exitoso. Ya puedes iniciar sesión.");
+      } else {
+        setMensaje(data.message || "Error al registrar usuario");
+      }
+    } catch (error) {
+      setMensaje("Error de conexión con el servidor.");
     }
   };
 
   return (
-    <div className="auth-container">
-      <h2>Crear Cuenta</h2>
+    <div>
+      <Navbar />
 
-      {error && <p className="error-msg">{error}</p>}
-      {success && <p className="success-msg">{success}</p>}
+      <div className="auth-container">
+        <h2>Crear Cuenta</h2>
 
-      <input
-        type="text"
-        placeholder="Nombre completo"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        className="auth-input"
-      />
+        <form onSubmit={handleRegister} className="auth-form">
+          <label>Nombre</label>
+          <input
+            type="text"
+            value={nombre}
+            onChange={(e) => setNombre(e.target.value)}
+            required
+          />
 
-      <input
-        type="email"
-        placeholder="Correo"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        className="auth-input"
-      />
+          <label>Correo Electrónico</label>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
 
-      <input
-        type="password"
-        placeholder="Contraseña"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        className="auth-input"
-      />
+          <label>Contraseña</label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
 
-      <button onClick={handleRegister} className="auth-btn">
-        Registrarse
-      </button>
+          <label>Confirmar Contraseña</label>
+          <input
+            type="password"
+            value={confirmar}
+            onChange={(e) => setConfirmar(e.target.value)}
+            required
+          />
 
-      <p className="auth-switch" onClick={() => navigate("/login")}>
-        ¿Ya tienes cuenta? Inicia sesión aquí
-      </p>
+          <button type="submit">Registrarme</button>
+        </form>
+
+        {mensaje && <p className="auth-message">{mensaje}</p>}
+      </div>
+
+      <Footer />
     </div>
   );
-};
+}
 
 export default Register;

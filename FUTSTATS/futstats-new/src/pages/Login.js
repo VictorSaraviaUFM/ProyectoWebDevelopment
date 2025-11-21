@@ -1,55 +1,69 @@
 import React, { useState } from "react";
-import { loginUser } from "../services/api";
-import { useNavigate } from "react-router-dom";
+import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
-const Login = () => {
-  const navigate = useNavigate();
+function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [mensaje, setMensaje] = useState("");
 
-  const handleLogin = async () => {
-    const res = await loginUser({ email, password });
+  const handleLogin = async (e) => {
+    e.preventDefault();
 
-    if (res.success) {
-      localStorage.setItem("token", res.token);
-      navigate("/"); // redirige al dashboard
-    } else {
-      setError(res.message || "Credenciales incorrectas");
+    // Aún no existe el backend, pero este fetch queda listo
+    try {
+      const response = await fetch("http://localhost:5000/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setMensaje("Login exitoso. Bienvenido!");
+        localStorage.setItem("token", data.token);
+      } else {
+        setMensaje(data.message || "Error al iniciar sesión");
+      }
+    } catch (error) {
+      setMensaje("Error de conexión con el servidor.");
     }
   };
 
   return (
-    <div className="auth-container">
-      <h2>Iniciar Sesión</h2>
+    <div>
+      <Navbar />
 
-      {error && <p className="error-msg">{error}</p>}
+      <div className="auth-container">
+        <h2>Iniciar Sesión</h2>
 
-      <input
-        type="email"
-        placeholder="Correo electrónico"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        className="auth-input"
-      />
+        <form onSubmit={handleLogin} className="auth-form">
+          <label>Correo Electrónico</label>
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
 
-      <input
-        type="password"
-        placeholder="Contraseña"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        className="auth-input"
-      />
+          <label>Contraseña</label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
 
-      <button onClick={handleLogin} className="auth-btn">
-        Entrar
-      </button>
+          <button type="submit">Entrar</button>
+        </form>
 
-      <p className="auth-switch" onClick={() => navigate("/register")}>
-        ¿No tienes cuenta? Regístrate aquí
-      </p>
+        {mensaje && <p className="auth-message">{mensaje}</p>}
+      </div>
+
+      <Footer />
     </div>
   );
-};
+}
 
 export default Login;

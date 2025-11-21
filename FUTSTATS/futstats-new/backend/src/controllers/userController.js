@@ -1,34 +1,60 @@
 import User from "../models/User.js";
+import jwt from "jsonwebtoken";
 
-// REGISTRO
-export const registerUser = async (req, res) => {
-  try {
-    const { username, email, password } = req.body;
-
-    const exists = await User.findOne({ email });
-    if (exists) return res.status(400).json({ msg: "Usuario ya registrado" });
-
-    const newUser = await User.create({ username, email, password });
-
-    res.json({ msg: "Usuario registrado", user: newUser });
-  } catch (err) {
-    res.status(500).json({ msg: "Error en servidor", err });
-  }
+// Crear Token
+const generateToken = (userId) => {
+    return jwt.sign({ id: userId }, process.env.JWT_SECRET, {
+        expiresIn: "7d",
+    });
 };
 
-// LOGIN
+export const registerUser = async (req, res) => {
+    try {
+        const { username, email, password } = req.body;
+
+        const userExists = await User.findOne({ email });
+        if (userExists) {
+            return res.status(400).json({ message: "El correo ya está registrado" });
+        }
+
+        const newUser = await User.create({ username, email, password });
+
+        res.status(201).json({
+            message: "Usuario registrado correctamente",
+            user: {
+                id: newUser._id,
+                username: newUser.username,
+                email: newUser.email
+            },
+            token: generateToken(newUser._id)
+        });
+    } catch (error) {
+        res.status(500).json({ message: "Error en el servidor", error });
+    }
+};
+
 export const loginUser = async (req, res) => {
-  try {
-    const { email, password } = req.body;
+    try {
+        const { email, password } = req.body;
 
-    const user = await User.findOne({ email });
-    if (!user) return res.status(400).json({ msg: "No existe ese usuario" });
+        const user = await User.findOne({ email });
+        if (!user) return res.status(401).json({ message: "Usuario no encontrado" });
 
-    if (password !== user.password)
-      return res.status(400).json({ msg: "Contraseña incorrecta" });
+        const isMatch = await user.comparePassword(password);
+        if (!isMatch) {
+            return res.status(401).json({ message: "Contraseña incorrecta" });
+        }
 
-    res.json({ msg: "Login exitoso", user });
-  } catch (err) {
-    res.status(500).json({ msg: "Error en servidor", err });
-  }
+        res.json({
+            message: "Inicio de sesión exitoso",
+            user: {
+                id: user._id,
+                username: user.username,
+                email: user.email
+            },
+            token: generateToken(user._id)
+        });
+    } catch (error) {
+        res.status(500).json({ message: "Error en el servidor", error });
+    }
 };
