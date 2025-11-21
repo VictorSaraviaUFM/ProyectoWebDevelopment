@@ -36,6 +36,9 @@ export interface Match {
   status: 'finished' | 'live' | 'upcoming';
   homeLogo: string;
   awayLogo: string;
+  league?: string;
+  minute?: number;
+  time?: string;
 }
 
 export const mockPlayers: Player[] = [

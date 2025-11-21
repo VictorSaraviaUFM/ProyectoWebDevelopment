@@ -82,16 +82,7 @@ const Header = () => {
               }`}
             >
               Dashboard
-            </Link>
-            <Link
-              to="/profile"
-              className={`px-5 py-2.5 rounded-xl font-medium transition-all ${
-                isActive("/profile")
-                  ? "bg-gradient-primary text-white shadow-glow"
-                  : "text-muted-foreground hover:text-foreground hover:bg-secondary/50"
-              }`}
-            >
-              Perfil
+            
             </Link>
             <Link
               to="/comments"

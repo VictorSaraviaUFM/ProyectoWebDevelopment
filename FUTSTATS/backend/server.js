@@ -7,6 +7,7 @@ import teamRoutes from './routes/teams.js';
 import commentRoutes from './routes/comments.js';
 import authRoutes from './routes/auth.js';
 import userRoutes from './routes/users.js';
+import matchRoutes from './routes/matches.js';
 
 dotenv.config();
 
@@ -23,6 +24,7 @@ app.use('/api/teams', teamRoutes);
 app.use('/api/comments', commentRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/matches', matchRoutes);
 
 // MongoDB connection
 const connectDB = async () => {
