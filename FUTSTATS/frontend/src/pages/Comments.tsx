@@ -13,14 +13,11 @@ const Comments = () => {
   const { user } = useAuth();
   const [comments, setComments] = useState<any[]>([]);
   const [newComment, setNewComment] = useState("");
-  const [replyingTo, setReplyingTo] = useState<string | null>(null);
   const [expandedReplies, setExpandedReplies] = useState<Set<string>>(new Set());
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   
-  // Referencias para mantener el foco
   const newCommentRef = useRef<HTMLTextAreaElement>(null);
-  const replyRefs = useRef<{ [key: string]: HTMLTextAreaElement | null }>({});
 
   useEffect(() => {
     fetchComments();
@@ -58,7 +55,8 @@ const Comments = () => {
     }
   };
 
-  const handleSubmitReply = async (parentCommentId: string, replyContent: string) => {
+  // Renombrar esta función para evitar conflicto
+  const submitReplyToServer = async (parentCommentId: string, replyContent: string) => {
     if (!replyContent.trim() || !user) return;
 
     setSubmitting(true);
@@ -71,7 +69,6 @@ const Comments = () => {
       };
 
       await apiService.createComment(replyData);
-      setReplyingTo(null);
       fetchComments();
     } catch (error) {
       console.error('Error creating reply:', error);
@@ -83,7 +80,6 @@ const Comments = () => {
   const handleLike = async (commentId: string) => {
     try {
       await apiService.likeComment(commentId);
-      // Actualizar el estado local
       setComments(prev => prev.map(comment => 
         comment._id === commentId 
           ? { ...comment, likes: comment.likes + 1 }
@@ -112,7 +108,6 @@ const Comments = () => {
 
     const handleStartReply = () => {
       setIsReplying(true);
-      setReplyingTo(comment._id);
       // Enfocar el textarea después de un pequeño delay para asegurar que se renderice
       setTimeout(() => {
         textareaRef.current?.focus();
@@ -121,13 +116,13 @@ const Comments = () => {
 
     const handleCancelReply = () => {
       setIsReplying(false);
-      setReplyingTo(null);
       setReplyContent("");
     };
 
-    const handleSubmitReply = async () => {
+    // Esta es la función local que NO tiene conflicto de nombres
+    const handleLocalSubmitReply = async () => {
       if (!replyContent.trim()) return;
-      await handleSubmitReply(comment._id, replyContent);
+      await submitReplyToServer(comment._id, replyContent);
       setIsReplying(false);
       setReplyContent("");
     };
@@ -215,7 +210,7 @@ const Comments = () => {
                       </Button>
                       <Button 
                         size="sm"
-                        onClick={handleSubmitReply}
+                        onClick={handleLocalSubmitReply} 
                         disabled={!replyContent.trim() || submitting}
                         className="bg-gradient-primary text-white hover:opacity-90"
                       >
