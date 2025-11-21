@@ -86,10 +86,11 @@
             </p>
             
             <div class="hero-actions">
-              <a href="#demo" class="btn btn-primary btn-lg">
+              <!-- En la sección Hero, cambiar el botón "Ver Demo Interactivo" -->
+            <a href="https://proyecto-web-development.vercel.app/" class="btn btn-primary btn-lg" target="_blank">
                 <i class="fas fa-chart-line me-2"></i>
                 Ver Demo Interactivo
-              </a>
+            </a>
               <a href="#features" class="btn btn-outline-light btn-lg">
                 <i class="fas fa-rocket me-2"></i>
                 Características
@@ -287,101 +288,91 @@
     </div>
     
     <div class="tech-stack">
-      <div class="tech-category">
-        <h4>Frontend</h4>
-        <div class="tech-items">
-          <div class="tech-item" data-tooltip="Framework principal - En evaluación final">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg" alt="Angular">
-            <span>Angular</span>
-          </div>
-          <div class="tech-item" data-tooltip="Visualización de datos avanzada">
+      <!-- En la sección Stack Tecnológico -->
+<div class="tech-category">
+    <h4>Frontend</h4>
+    <div class="tech-items">
+        <div class="tech-item" data-tooltip="Framework principal - En evaluación final">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React">
+            <span>React</span>
+        </div>
+        <div class="tech-item" data-tooltip="Visualización de datos avanzada">
             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/d3js/d3js-original.svg" alt="D3.js">
             <span>D3.js</span>
-          </div>
-          <div class="tech-item" data-tooltip="Framework CSS responsivo">
+        </div>
+        <div class="tech-item" data-tooltip="Framework CSS responsivo">
             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg" alt="Bootstrap">
             <span>Bootstrap</span>
-          </div>
         </div>
-      </div>
-      
-      <div class="tech-category">
-        <h4>Backend</h4>
-        <div class="tech-items">
-          <div class="tech-item" data-tooltip="Runtime JavaScript escalable">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Node.js">
-            <span>Node.js</span>
-          </div>
-          <div class="tech-item" data-tooltip="Framework web minimalista">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg" alt="Express">
-            <span>Express</span>
-          </div>
-         
+    </div>
+</div>
+
+<div class="tech-category">
+    <h4>Data & APIs</h4>
+    <div class="tech-items">
+        <div class="tech-item" data-tooltip="Base de datos NoSQL">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" alt="MongoDB">
+            <span>MongoDB</span>
         </div>
-      </div>
-      
-      <div class="tech-category">
-        <h4>Data & APIs</h4>
-        <div class="tech-items">
-          <div class="tech-item" data-tooltip="Base de datos relacional">
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PostgreSQL">
-            <span>PostgreSQL</span>
-          </div>
-          <div class="tech-item" data-tooltip="API de fútbol en tiempo real">
+        <div class="tech-item" data-tooltip="API de fútbol en tiempo real">
             <span class="tech-icon">API</span>
             <span>API-Football</span>
-          </div>
         </div>
-      </div>
+    </div>
+</div>
     </div>
   </div>
 </section>
 
 <!-- Multimedia -->
+<!-- Sección Multimedia actualizada -->
 <section id="multimedia" class="multimedia-section">
-  <div class="container">
-    <div class="section-header">
-      <h2>Galería Multimedia</h2>
-      <p>Próximamente: Capturas, demos y videos del proyecto en acción</p>
+    <div class="container">
+        <div class="section-header">
+            <h2>Galería Multimedia</h2>
+            <p>Capturas y visualizaciones del proyecto en acción</p>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+                <div class="multimedia-item">
+                    <img src="imagen1.png" alt="Interfaz de Usuario" class="img-fluid multimedia-img">
+                    <div class="multimedia-overlay">
+                        <h5>Interfaz de Usuario</h5>
+                        <p>Dashboard principal de análisis</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="multimedia-item">
+                    <img src="imagen2.png" alt="Gráficos Interactivos" class="img-fluid multimedia-img">
+                    <div class="multimedia-overlay">
+                        <h5>Gráficos Interactivos</h5>
+                        <p>Visualizaciones de datos en tiempo real</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="multimedia-item">
+                    <img src="imagen3.jpg" alt="Versión Móvil" class="img-fluid multimedia-img">
+                    <div class="multimedia-overlay">
+                        <h5>Versión Móvil</h5>
+                        <p>Experiencia optimizada para smartphones</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="multimedia-item">
+                    <img src="imagen4.png" alt="Análisis Detallado" class="img-fluid multimedia-img">
+                    <div class="multimedia-overlay">
+                        <h5>Análisis Detallado</h5>
+                        <p>Estadísticas avanzadas de jugadores</p>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    
-    <div class="row g-4">
-      <div class="col-md-6">
-        <div class="multimedia-placeholder">
-          <i class="fas fa-desktop"></i>
-          <h5>Interfaz de Usuario</h5>
-          <p>Capturas de pantalla de las principales vistas y dashboards</p>
-          <small class="text-muted">Disponible en la versión final</small>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="multimedia-placeholder">
-          <i class="fas fa-chart-line"></i>
-          <h5>Gráficos Interactivos</h5>
-          <p>Demostraciones de visualizaciones de datos en tiempo real</p>
-          <small class="text-muted">Disponible en la versión final</small>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="multimedia-placeholder">
-          <i class="fas fa-mobile-alt"></i>
-          <h5>Versión Móvil</h5>
-          <p>Experiencia optimizada para dispositivos smartphones</p>
-          <small class="text-muted">Disponible en la versión final</small>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="multimedia-placeholder">
-          <i class="fas fa-video"></i>
-          <h5>Video Demo</h5>
-          <p>Recorrido completo por las funcionalidades principales</p>
-          <small class="text-muted">Disponible en la versión final</small>
-        </div>
-      </div>
-    </div>
-  </div>
 </section>
-
   
   <!-- Footer -->
   <footer class="footer">
