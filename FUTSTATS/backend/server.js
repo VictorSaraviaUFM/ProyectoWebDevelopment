@@ -20,7 +20,7 @@ const PORT = process.env.PORT || 5000;
 const allowedOrigins = [
   'http://localhost:5173',
   'http://localhost:8080',
-  'https://proyecto-web-development.vercel.app/', // Reemplaza con tu dominio real de Vercel
+  'https://proyecto-web-development.vercel.app', // Reemplaza con tu dominio real de Vercel
   'https://*.vercel.app' // Permitir subdominios de Vercel
 ];
 
