@@ -1,0 +1,25 @@
+:root {
+  --primary: #007bff;
+  --gradient-start: #007bff;
+  --gradient-end: #6610f2;
+}
+
+/* Contenedores principales */
+.main-content {
+  min-height: calc(100vh - 140px);
+  padding-bottom: 40px;
+}
+
+/* Rating de jugadores */
+.player-rating {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  margin-right: 8px;
+}
