@@ -132,6 +132,20 @@ async getAllTeams() {
   }
 
   return allTeams;
-}
+},
 
+likeComment: async (commentId) => {
+    const response = await fetch(`${API_URL}/comments/${commentId}/like`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    return response.json();
+  },
+
+  getCommentReplies: async (commentId) => {
+    const response = await fetch(`${API_URL}/comments/${commentId}/replies`);
+    return response.json();
+  },
 };

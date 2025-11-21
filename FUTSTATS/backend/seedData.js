@@ -160,24 +160,67 @@ const seedData = async () => {
     console.log(`✅ ${teams.length} equipos insertados`);
 
     // Insertar comentarios
-    const comments = await Comment.insertMany([
-      {
-        user: "María García",
-        content: "¡Increíble partido el de anoche! El Real Madrid demostró por qué es el rey de Europa. Esa jugada de Modrić fue MAGISTRAL 🔥",
-        likes: 234
-      },
-      {
-        user: "Juan Pérez", 
-        content: "No puedo creer que el árbitro no pitara ese penalti. Las estadísticas claramente muestran que fue falta dentro del área. VAR dónde estás? 🤦‍♂️",
-        likes: 89
-      },
-      {
-        user: "Ana López",
-        content: "Haaland va camino de romper todos los récords esta temporada. 23 goles en 15 partidos es una locura. Mejor fichaje de la Premier League sin duda 👑",
-        likes: 412
-      }
-    ]);
-    console.log(` ${comments.length} comentarios insertados`);
+    // En la sección de comentarios del seedData.js, modificar:
+const comments = await Comment.insertMany([
+  {
+    user: "María García",
+    content: "¡Increíble partido el de anoche! El Real Madrid demostró por qué es el rey de Europa. Esa jugada de Modrić fue MAGISTRAL 🔥",
+    likes: 234,
+    replyCount: 2,
+    isReply: false
+  },
+  {
+    user: "Juan Pérez", 
+    content: "No puedo creer que el árbitro no pitara ese penalti. Las estadísticas claramente muestran que fue falta dentro del área. VAR dónde estás? 🤦‍♂️",
+    likes: 89,
+    replyCount: 1,
+    isReply: false
+  },
+  {
+    user: "Ana López",
+    content: "Haaland va camino de romper todos los récords esta temporada. 23 goles en 15 partidos es una locura. Mejor fichaje de la Premier League sin duda 👑",
+    likes: 412,
+    replyCount: 0,
+    isReply: false
+  }
+]);
+
+// Insertar algunas respuestas después
+const reply1 = new Comment({
+  user: "Carlos Rodríguez",
+  content: "Totalmente de acuerdo! Esa asistencia de Modrić fue de otro planeta. Qué jugador más especial 🤩",
+  likes: 45,
+  parentComment: comments[0]._id,
+  isReply: true
+});
+await reply1.save();
+
+const reply2 = new Comment({
+  user: "Laura Martínez",
+  content: "Modrić a sus 38 años jugando como si tuviera 25. Leyenda viviente del fútbol! 🐐",
+  likes: 67,
+  parentComment: comments[0]._id,
+  isReply: true
+});
+await reply2.save();
+
+// Actualizar el comentario padre con las respuestas
+await Comment.findByIdAndUpdate(comments[0]._id, {
+  replies: [reply1._id, reply2._id]
+});
+
+const reply3 = new Comment({
+  user: "Diego Sánchez",
+  content: "El VAR esta temporada está siendo muy inconsistente. En otras ligas eso sí lo pitan sin dudar!",
+  likes: 23,
+  parentComment: comments[1]._id,
+  isReply: true
+});
+await reply3.save();
+
+await Comment.findByIdAndUpdate(comments[1]._id, {
+  replies: [reply3._id]
+});
 
     console.log(' Todos los datos de prueba insertados exitosamente!');
     process.exit(0);
