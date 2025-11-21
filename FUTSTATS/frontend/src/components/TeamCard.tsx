@@ -1,13 +1,28 @@
 import { Team } from "@/data/mockData";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Trophy } from "lucide-react";
+import { Trophy, Star } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContexts";
 
 interface TeamCardProps {
   team: Team;
+  showFavoriteButton?: boolean;
+  isFavorite?: boolean;
+  onToggleFavorite?: (teamId: string) => void;
 }
 
-const TeamCard = ({ team }: TeamCardProps) => {
+const TeamCard = ({ team, showFavoriteButton = false, isFavorite = false, onToggleFavorite }: TeamCardProps) => {
+  const { user } = useAuth();
+
+  const handleFavoriteClick = () => {
+    if (onToggleFavorite && user) {
+      const teamId = team._id || team.id?.toString();
+      if (teamId) {
+        onToggleFavorite(teamId);
+      }
+    }
+  };
+
   const goalDifference = team.goalsFor - team.goalsAgainst;
   
   return (
@@ -26,6 +41,18 @@ const TeamCard = ({ team }: TeamCardProps) => {
             <h3 className="font-bold text-xl text-foreground mb-1">{team.name}</h3>
             <p className="text-sm text-primary font-semibold">{team.points} puntos</p>
           </div>
+          {showFavoriteButton && user && (
+            <button
+              onClick={handleFavoriteClick}
+              className={`p-2 rounded-full transition-all ${
+                isFavorite 
+                  ? 'text-yellow-500 bg-yellow-500/20' 
+                  : 'text-muted-foreground hover:text-yellow-500 hover:bg-yellow-500/10'
+              }`}
+            >
+              <Star className={`h-4 w-4 ${isFavorite ? 'fill-current' : ''}`} />
+            </button>
+          )}
         </div>
         
         <div className="grid grid-cols-3 gap-4 mb-4">

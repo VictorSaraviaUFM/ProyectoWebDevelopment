@@ -9,7 +9,7 @@ import { useAuth } from "@/contexts/AuthContexts";
 import { useEffect, useState } from "react";
 
 const Players = () => {
-  const { user } = useAuth();
+  const { user, addFavoritePlayer } = useAuth();
   const [players, setPlayers] = useState<any[]>([]);
   const [filteredPlayers, setFilteredPlayers] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -58,20 +58,16 @@ const Players = () => {
     setFilteredPlayers(filtered);
   }, [searchTerm, positionFilter, teamFilter, players]);
 
+
   const handleAddFavorite = async (playerId: string) => {
-    if (!user) return;
-    
-    try {
-      // En una implementación real, llamaríamos a la API
-      console.log('Agregando jugador favorito:', playerId);
-      // await apiService.addFavoritePlayer(playerId);
-      
-      // Por ahora, solo mostramos un mensaje
-      alert(`¡${players.find(p => p._id === playerId)?.name} agregado a favoritos!`);
-    } catch (error) {
-      console.error('Error adding favorite:', error);
-    }
-  };
+  if (!user) return;
+  
+  const player = players.find(p => p._id === playerId || p.id?.toString() === playerId);
+  if (player) {
+    addFavoritePlayer(player);
+    alert(`¡${player.name} agregado a favoritos!`);
+  }
+};
 
   // Obtener posiciones y equipos únicos para los filtros
   const positions = [...new Set(players.map(p => p.position))];
